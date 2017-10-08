@@ -35,10 +35,11 @@ const StartQuiz = styled.TouchableOpacity`
 
 class Deck extends Component {
   render () {
+    const title = this.props.navigation.state.params.title
     return (
       <View style={{flex: 1}}>
         <CenterView>
-          <Text style={{fontSize: 25, color: 'black'}}>Title</Text>
+          <Text style={{fontSize: 25, color: 'black'}}>{title}</Text>
           <Text>Number of cards</Text>
         </CenterView>
         <AddCard>
