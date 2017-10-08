@@ -3,10 +3,11 @@ import { Text, View } from 'react-native';
 import Deck from './components/Deck'
 import Quiz from './components/Quiz'
 import { Constants } from 'expo'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'
 import { Entypo, Ionicons } from '@expo/vector-icons'
+import AddQuestion from './components/AddQuestion'
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -40,12 +41,41 @@ const Tabs = TabNavigator({
   }
 })
 
+const MainNavigator = StackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      title: 'Home',
+      headerTintColor: 'black',
+      headerStyle: {
+        backgroundColor: 'white',
+      },
+      headerTitleStyle: {
+        fontSize: 25
+      }
+    }
+  },
+  Deck: {
+    screen: Deck,
+    navigationOptions: {
+      title: 'Deck Details',
+      headerTintColor: 'black',
+      headerStyle: {
+        backgroundColor: 'white'
+      },
+      headerTitleStyle: {
+        fontSize: 25
+      }
+    }
+  }
+})
+
 export default class App extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
         <View style={{height: Constants.statusBarHeight}} />
-        <Tabs />
+        <MainNavigator />
       </View>
     );
   }

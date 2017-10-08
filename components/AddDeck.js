@@ -6,7 +6,7 @@ const MainView = styled.View`
   flex: 1;
   align-items: stretch;
   justify-content: space-around;
-  margin-top: 10%;
+  background-color: white
 `
 
 const ViewWrapper = styled.View`
@@ -22,7 +22,12 @@ const DeckTitleView = styled.View`
 
 const DeckTitleInput = styled.TextInput`
   flex: 1;
-  border: solid red;
+  border: solid black;
+`
+
+const BtnWrapper = styled.View`
+  flex: 1;
+  padding: 20% 35% 35% 35%;
 `
 
 const Submit = styled.TouchableOpacity`
@@ -32,8 +37,8 @@ const Submit = styled.TouchableOpacity`
   border: solid black;
   align-items: center;
   justify-content: center;
-  margin: 10% 20% 30% 20%;
-  padding-top: 7%;
+  margin-top: 15%;
+  background-color: rgb(105,105,105);
 `
 
 class AddDeck extends Component {
@@ -52,9 +57,11 @@ class AddDeck extends Component {
             onChangeText={(text) => this.setState({ deckInput: text })}
           />
         </ViewWrapper>
-        <Submit>
-          <Text style={{flex: 1, color: 'black', fontSize: 30}}>Submit</Text>
-        </Submit>
+        <BtnWrapper>
+          <Submit>
+            <Text style={{flex: 1, color: 'white', fontSize: 25}}>Submit</Text>
+          </Submit>
+        </BtnWrapper>
       </MainView>
     )
   }
