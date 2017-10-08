@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text } from 'react-native'
 import styled from 'styled-components/native'
 //55% margin-top
 const CenterView = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  margin-top: 40%;
+  margin-top: 35%;
 `
 
 const AddCard = styled.TouchableOpacity`
@@ -30,12 +30,13 @@ const StartQuiz = styled.TouchableOpacity`
   margin-left: 10%;
   margin-right: 10%;
   margin-top: 2%;
+  margin-bottom: 2%;
 `
 
 class Deck extends Component {
   render () {
     return (
-      <View>
+      <View style={{flex: 1}}>
         <CenterView>
           <Text style={{fontSize: 25, color: 'black'}}>Title</Text>
           <Text>Number of cards</Text>

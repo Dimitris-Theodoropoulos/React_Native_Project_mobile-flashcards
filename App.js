@@ -4,25 +4,31 @@ import Deck from './components/Deck'
 import Quiz from './components/Quiz'
 import { Constants } from 'expo'
 import { TabNavigator } from 'react-navigation'
+import AddDeck from './components/AddDeck'
+import DeckList from './components/DeckList'
+import { Entypo, Ionicons } from '@expo/vector-icons'
 
 const Tabs = TabNavigator({
-  Deck: {
-    screen: Deck,
+  DeckList: {
+    screen: DeckList,
     navigationOptions: {
-      tabBarLabel: 'Deck',
+      tabBarLabel: 'DECKS',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-list-box-outline' size={30} color={tintColor} />
     }
   },
-  Quiz: {
-    screen: Quiz,
+  AddDeck: {
+    screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: 'Quiz'
+      tabBarLabel: 'NEW DECK',
+      tabBarIcon: ({ tintColor }) => <Entypo name='add-to-list' size={30} color={tintColor} />
     }
   }
 }, {
   tabBarOptions: {
+    activeTintColor: 'black',
     style: {
       height: 56,
-      backgroundColor: 'rgb(240,230,140)',
+      backgroundColor: 'white',
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
