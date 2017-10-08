@@ -42,10 +42,10 @@ class Deck extends Component {
           <Text style={{fontSize: 25, color: 'black'}}>{title}</Text>
           <Text>Number of cards</Text>
         </CenterView>
-        <AddCard>
+        <AddCard onPress={() => this.props.navigation.navigate('AddQuestion')}>
           <Text style={{color: 'black', fontSize: 20}}>Add Card</Text>
         </AddCard>
-        <StartQuiz>
+        <StartQuiz onPress={() => this.props.navigation.navigate('Quiz')}>
           <Text style={{color: 'white', fontSize: 20}}>Start Quiz</Text>
         </StartQuiz>
       </View>

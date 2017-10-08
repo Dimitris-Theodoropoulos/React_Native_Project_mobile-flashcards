@@ -67,7 +67,33 @@ const MainNavigator = StackNavigator({
         fontSize: 25
       }
     }
-  }
+  },
+  AddQuestion: {
+    screen: AddQuestion,
+    navigationOptions: {
+      title: 'Add question',
+      headerTintColor: 'black',
+      headerStyle: {
+        backgroundColor: 'white'
+      },
+      headerTitleStyle: {
+        fontSize: 25
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      title: 'Quiz!',
+      headerTintColor: 'black',
+      headerStyle: {
+        backgroundColor: 'white'
+      },
+      headerTitleStyle: {
+        fontSize: 25
+      }
+    }
+  },
 })
 
 export default class App extends React.Component {
