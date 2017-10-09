@@ -1,116 +1,94 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 
 const MainView = styled.View`
-  flex: 3;
+  flex: 1;
+  background-color: white;
   align-items: center;
-  justify-content: space-around;
 `
 
-const IndexText = styled.Text`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  font-size: 25;
-`
-
-const QuestionText = styled.Text`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
+const CardTracker = styled.Text`
   font-size: 30;
+  margin-top: 3%;
 `
 
-const AnswerBtn = styled.TouchableOpacity`
-  flex: 1;
+const MainText = styled.Text`
+  font-size: 45;
+  margin-top: 10%;
+  height: 30%;
 `
 
-const BtnView = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 5% 10% 2% 10%;
+const ToggleBtn = styled.TouchableOpacity`
+  margin-top: 10%;
+`
+
+const ToggleText = styled.Text`
+  font-size: 25;
+  color: red;
 `
 
 const CorrectBtn = styled.TouchableOpacity`
-  flex: 1;
-  justify-content: center;
+  width: 65%;
   align-items: center;
+  justify-content: center;
+  height: 10%;
+  margin-top: 30%;
   background-color: green;
-  padding: 0% 26% 0% 26%;
+`
+
+const BtnText = styled.Text`
+  font-size: 25;
+  color: white;
 `
 
 const IncorrectBtn = styled.TouchableOpacity`
-  flex: 1;
-  justify-content: center;
+  width: 65%;
   align-items: center;
+  justify-content: center;
+  height: 10%;
   margin-top: 2%;
   background-color: red;
-  padding: 0% 24% 0% 24%;
-`
-
-const AnswerText = styled.Text`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  font-size: 30;
-`
-
-const QuestionBtn = styled.TouchableOpacity`
-  flex: 1;
 `
 
 class Quiz extends Component {
   state = {
-    toggleView: 'question'
+    flipCard: 'question'
   }
+
   render () {
-    const { toggleView } = this.state
-    if (toggleView === 'question') {
+    const { flipCard } = this.state
+    if (flipCard === 'question') {
       return (
-        <View style={{flex: 1}}>
-          <MainView>
-            <IndexText>2/2</IndexText>
-            <QuestionText>
-              What is your favorite movie?
-            </QuestionText>
-            <AnswerBtn onPress={() => this.setState({ toggleView: 'answer' })}>
-              <Text style={{fontSize: 25, color: 'red'}}>Answer</Text>
-            </AnswerBtn>
-          </MainView>
-          <BtnView>
-            <CorrectBtn>
-              <Text style={{color: 'white', fontSize: 25}}>Correct</Text>
-            </CorrectBtn>
-            <IncorrectBtn>
-              <Text style={{color: 'white', fontSize: 25}}>Incorrect</Text>
-            </IncorrectBtn>
-          </BtnView>
-        </View>
+        <MainView>
+          <CardTracker>2/2</CardTracker>
+          <MainText>What is the name of your favorite movie?</MainText>
+          <ToggleBtn onPress={() => this.setState({ flipCard: 'answer' })}>
+            <ToggleText>Answer</ToggleText>
+          </ToggleBtn>
+          <CorrectBtn>
+            <BtnText>Correct!</BtnText>
+          </CorrectBtn>
+          <IncorrectBtn>
+            <BtnText>Next time...</BtnText>
+          </IncorrectBtn>
+        </MainView>
       )
     }
-    if (toggleView === 'answer') {
+    if (flipCard === 'answer') {
       return (
-        <View style={{flex: 1}}>
-          <MainView>
-            <IndexText>2/2</IndexText>
-            <AnswerText>
-              V for vendetta
-            </AnswerText>
-            <QuestionBtn onPress={() => this.setState({ toggleView: 'question' })}>
-              <Text style={{fontSize: 25, color: 'red'}}>Question</Text>
-            </QuestionBtn>
-          </MainView>
-          <BtnView>
-            <CorrectBtn>
-              <Text style={{color: 'white', fontSize: 25}}>Correct</Text>
-            </CorrectBtn>
-            <IncorrectBtn>
-              <Text style={{color: 'white', fontSize: 25}}>Incorrect</Text>
-            </IncorrectBtn>
-          </BtnView>
-        </View>
+        <MainView>
+          <CardTracker>2/2</CardTracker>
+          <MainText>V For Vendetta</MainText>
+          <ToggleBtn onPress={() => this.setState({ flipCard: 'question' })}>
+            <ToggleText>Question</ToggleText>
+          </ToggleBtn>
+          <CorrectBtn>
+            <BtnText>Correct!</BtnText>
+          </CorrectBtn>
+          <IncorrectBtn>
+            <BtnText>Next time...</BtnText>
+          </IncorrectBtn>
+        </MainView>
       )
     }
   }

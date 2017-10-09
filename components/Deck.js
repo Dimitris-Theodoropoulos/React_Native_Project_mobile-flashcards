@@ -1,54 +1,66 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
 import styled from 'styled-components/native'
 
-const CenterView = styled.View`
+const MainView = styled.View`
   flex: 1;
   align-items: center;
-  justify-content: center;
-  margin-top: 35%;
+  background-color: white;
+`
+
+const DeckTitle = styled.Text`
+  margin-top: 30%;
+  font-size: 30;
+`
+
+const NumberOfCards = styled.Text`
+  font-size: 20;
+  color: gray;
 `
 
 const AddCard = styled.TouchableOpacity`
-  flex: 1;
+  width: 80%;
+  height: 15%;
+  background-color: white;
+  border: solid black;
   align-items: center;
   justify-content: center;
-  margin-top: 70%;
-  margin-left: 10%;
-  margin-right: 10%;
-  background-color: white;
-  padding: 10%;
-  border: solid black;
+  margin-top: 55%;
 `
 
 const StartQuiz = styled.TouchableOpacity`
-  flex: 1;
+  width: 80%;
+  height: 15%;
+  background-color: black;
+  border: solid black;
   align-items: center;
   justify-content: center;
-  padding: 10%;
-  background-color: black;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin-top: 5%;
+`
+
+const AddCardText = styled.Text`
+  font-size: 20;
+  color: black;
+`
+
+const StartQuizText = styled.Text`
+  font-size: 20;
+  color: white;
 `
 
 class Deck extends Component {
   render () {
     const title = this.props.navigation.state.params.title
     return (
-      <View style={{flex: 1}}>
-        <CenterView>
-          <Text style={{fontSize: 25, color: 'black'}}>{title}</Text>
-          <Text>Number of cards</Text>
-        </CenterView>
-        <AddCard onPress={() => this.props.navigation.navigate('AddQuestion')}>
-          <Text style={{color: 'black', fontSize: 20}}>Add Card</Text>
+      <MainView>
+        <DeckTitle>{title}</DeckTitle>
+        <NumberOfCards>3 cards</NumberOfCards>
+        <AddCard onPress={() => this.props.navigation.navigate('AddCard')}>
+          <AddCardText>Add Card</AddCardText>
         </AddCard>
         <StartQuiz onPress={() => this.props.navigation.navigate('Quiz')}>
-          <Text style={{color: 'white', fontSize: 20}}>Start Quiz</Text>
+          <StartQuizText>Start Quiz</StartQuizText>
         </StartQuiz>
-      </View>
+      </MainView>
     )
   }
 }

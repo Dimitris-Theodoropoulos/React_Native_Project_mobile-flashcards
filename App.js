@@ -7,7 +7,7 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'
 import { Entypo, Ionicons } from '@expo/vector-icons'
-import AddQuestion from './components/AddQuestion'
+import AddCard from './components/AddCard'
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -68,10 +68,10 @@ const MainNavigator = StackNavigator({
       }
     }
   },
-  AddQuestion: {
-    screen: AddQuestion,
+  AddCard: {
+    screen: AddCard,
     navigationOptions: {
-      title: 'Add question',
+      title: 'Add card',
       headerTintColor: 'black',
       headerStyle: {
         backgroundColor: 'white'

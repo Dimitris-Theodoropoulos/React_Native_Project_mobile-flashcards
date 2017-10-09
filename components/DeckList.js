@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 import styled from 'styled-components/native'
 import DeckInfo from './DeckInfo'
 
@@ -30,6 +30,7 @@ const MainView = styled.View`
   flex: 1;
   align-items: stretch;
   justify-content: center;
+  background-color: white;
 `
 
 class DeckList extends Component {
