@@ -54,7 +54,7 @@ class Deck extends Component {
       <MainView>
         <DeckTitle>{title}</DeckTitle>
         <NumberOfCards>3 cards</NumberOfCards>
-        <AddCard onPress={() => this.props.navigation.navigate('AddCard')}>
+        <AddCard onPress={() => this.props.navigation.navigate('AddCard', { title: title })}>
           <AddCardText>Add Card</AddCardText>
         </AddCard>
         <StartQuiz onPress={() => this.props.navigation.navigate('Quiz')}>

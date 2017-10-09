@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components/native'
+import { connect } from 'react-redux'
+import { saveDeckTitleAction } from '../actions'
 
 const MainView = styled.View`
   flex: 1;
@@ -42,15 +44,17 @@ const DeckTextWrapper = styled.View`
 
 class AddDeck extends Component {
   state = {
-    deckInput: 'Enter deck title'
+    title: ''
   }
 
-  handleDeckTitle = (e) => {
-    e.preventDefault()
-    this.setState({ deckInput: e.target.value })
+  handleSubmit = (title) => {
+    this.props.dispatch(saveDeckTitleAction({ title: title }))
+    this.setState({ title: '' })
+    this.props.navigation.navigate('DeckList')
   }
 
   render () {
+    const { title } = this.state
     return (
       <MainView>
         <DeckTextWrapper>
@@ -59,10 +63,11 @@ class AddDeck extends Component {
           </DeckText>
         </DeckTextWrapper>
         <DeckTitleInput
-          value={this.state.deckInput}
-          onChange={this.handleDeckTitle}
+          placeholder='Enter deck title'
+          value={this.state.title}
+          onChangeText={(text) => this.setState({ title: text })}
         />
-        <Submit>
+        <Submit onPress={() => this.handleSubmit(title)}>
           <SubmitText>
             Submit
           </SubmitText>
@@ -72,4 +77,12 @@ class AddDeck extends Component {
   }
 }
 
-export default AddDeck
+function mapStateToProps (decks) {
+  return {
+    decks,
+  }
+}
+
+export default connect (
+  mapStateToProps
+)(AddDeck)

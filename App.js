@@ -8,6 +8,10 @@ import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'
 import { Entypo, Ionicons } from '@expo/vector-icons'
 import AddCard from './components/AddCard'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
+import thunk from 'redux-thunk'
 
 const Tabs = TabNavigator({
   DeckList: {
@@ -96,13 +100,19 @@ const MainNavigator = StackNavigator({
   },
 })
 
+const store = createStore(
+  reducer, applyMiddleware(thunk)
+)
+
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex: 1}}>
-        <View style={{height: Constants.statusBarHeight}} />
-        <MainNavigator />
-      </View>
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <View style={{height: Constants.statusBarHeight}} />
+          <MainNavigator />
+        </View>
+      </Provider>
     );
   }
 }

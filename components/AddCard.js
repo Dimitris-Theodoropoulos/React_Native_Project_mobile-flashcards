@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components/native'
+import { connect } from 'react-redux'
+import { addCardToDeckAction } from '../actions'
 
 const MainView = styled.View`
   flex: 1;
@@ -36,34 +38,33 @@ const SubmitText = styled.Text`
   font-size: 25;
 `
 
-class AddQuestion extends Component {
+class AddCard extends Component {
   state = {
-    questionValue: 'Enter the question',
-    answerValue: 'Enter the answer'
+    question: '',
+    answer: '',
   }
 
-  handleQuestionText = (e) => {
-    e.preventDefault()
-    this.setState({ questionValue: e.target.value })
-  }
-
-  handleAnswerText = (e) => {
-    e.preventDefault()
-    this.setState({ answerValue: e.target.value })
+  handleSubmit = (title, question, answer) => {
+    this.props.dispatch(addCardToDeckAction({ title: title, question: question, answer: answer }))
+    this.props.navigation.navigate('Home')
   }
 
   render () {
+    const { question, answer } = this.state
+    const title = this.props.navigation.state.params.title
     return (
       <MainView>
         <QuestionInput
+          placeholder='Enter the question'
           value={this.state.questionValue}
-          onChange={this.handleQuestionText}>
+          onChangeText={(text) => this.setState({ question: text })}>
         </QuestionInput>
         <AnswerInput
+          placeholder='Enter the answer'
           value={this.state.answerValue}
-          onChange={this.handleAnswerText}>
+          onChangeText={(text) => this.setState({ answer: text })}>
         </AnswerInput>
-        <Submit>
+        <Submit onPress={() => this.handleSubmit(title, question, answer)}>
           <SubmitText>Submit</SubmitText>
         </Submit>
       </MainView>
@@ -71,4 +72,12 @@ class AddQuestion extends Component {
   }
 }
 
-export default AddQuestion
+function mapStateToProps (decks) {
+  return {
+    decks,
+  }
+}
+
+export default connect (
+  mapStateToProps
+)(AddCard)
