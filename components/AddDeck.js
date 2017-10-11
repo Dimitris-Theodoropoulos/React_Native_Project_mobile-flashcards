@@ -59,6 +59,7 @@ class AddDeck extends Component {
         saveDeckTitle(title)
         this.setState({title: ''})
         this.props.navigation.navigate('DeckList')
+        this.props.navigation.navigate('Deck', {title: title, numberOfCards: 0})
     }
 
     checkField = (title) => {

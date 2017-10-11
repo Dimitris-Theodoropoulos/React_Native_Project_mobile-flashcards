@@ -48,8 +48,22 @@ const StartQuizText = styled.Text`
 `
 
 class Deck extends Component {
+    state = {
+        quizDisabled: false,
+    }
+
+    componentDidMount () {
+        const { numberOfCards } = this.props.navigation.state.params
+        if (numberOfCards === 0) {
+            this.setState({ quizDisabled: true })
+        }else {
+            this.setState({ quizDisabled: false })
+        }
+    }
+
     render() {
         const { title, numberOfCards } = this.props.navigation.state.params
+        const { quizDisabled } = this.state
         return (
             <MainView>
                 <DeckTitle>{title}</DeckTitle>
@@ -57,7 +71,7 @@ class Deck extends Component {
                 <AddCard onPress={() => this.props.navigation.navigate('AddCard', {title: title})}>
                     <AddCardText>Add Card</AddCardText>
                 </AddCard>
-                <StartQuiz onPress={() => this.props.navigation.navigate('Quiz')}>
+                <StartQuiz disabled={quizDisabled} onPress={() => this.props.navigation.navigate('Quiz')}>
                     <StartQuizText>Start Quiz</StartQuizText>
                 </StartQuiz>
             </MainView>
