@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
+import { connect } from 'react-redux'
 
 const MainView = styled.View`
   flex: 1;
@@ -53,7 +54,8 @@ class Deck extends Component {
     }
 
     componentDidMount () {
-        const { numberOfCards } = this.props.navigation.state.params
+        const { title } = this.props.navigation.state.params
+        const numberOfCards = this.props.decks[title].numberOfCards
         if (numberOfCards === 0) {
             this.setState({ quizDisabled: true })
         }else {
@@ -61,9 +63,17 @@ class Deck extends Component {
         }
     }
 
+    handleQuiz = (title, numberOfCards) => {
+        if (this.state.quizDisabled === true) {
+            alert('Would you really test your knowledge with 0 questions??? Please add one first...')
+        }else {
+            this.props.navigation.navigate('Quiz', {title: title, numberOfCards: numberOfCards})
+        }
+    }
+
     render() {
-        const { title, numberOfCards } = this.props.navigation.state.params
-        const { quizDisabled } = this.state
+        const { title } = this.props.navigation.state.params
+        const numberOfCards = this.props.decks[title].numberOfCards
         return (
             <MainView>
                 <DeckTitle>{title}</DeckTitle>
@@ -71,7 +81,7 @@ class Deck extends Component {
                 <AddCard onPress={() => this.props.navigation.navigate('AddCard', {title: title})}>
                     <AddCardText>Add Card</AddCardText>
                 </AddCard>
-                <StartQuiz disabled={quizDisabled} onPress={() => this.props.navigation.navigate('Quiz')}>
+                <StartQuiz onPress={() => this.handleQuiz(title, numberOfCards)}>
                     <StartQuizText>Start Quiz</StartQuizText>
                 </StartQuiz>
             </MainView>
@@ -79,4 +89,12 @@ class Deck extends Component {
     }
 }
 
-export default Deck
+function mapStateToProps (decks) {
+    return {
+        decks,
+    }
+}
+
+export default connect (
+    mapStateToProps
+)(Deck)

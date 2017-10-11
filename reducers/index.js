@@ -1,7 +1,7 @@
-import {ADD_CARD_TO_DECK, SAVE_DECK_TITLE, SET_NUMBER_OF_CARDS} from '../actions'
+import {ADD_CARD_TO_DECK, SAVE_DECK_TITLE, SET_NUMBER_OF_CARDS, INCREASE_CARDS} from '../actions'
 
 function decks(state = {}, action) {
-    const {title, question, answer, numberOfCards} = action
+    const {title, question, answer, numberOfCards, previousNumber} = action
     switch (action.type) {
         case SAVE_DECK_TITLE :
             return {
@@ -32,6 +32,15 @@ function decks(state = {}, action) {
                 [title]: {
                     ...state[title],
                     numberOfCards: numberOfCards
+                }
+            }
+        case INCREASE_CARDS :
+            let newNumber = previousNumber + 1
+            return {
+                ...state,
+                [title]: {
+                    ...state[title],
+                    numberOfCards: newNumber
                 }
             }
         default :

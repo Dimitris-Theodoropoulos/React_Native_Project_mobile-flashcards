@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
+import { connect } from 'react-redux'
 
 
 const DeckView = styled.View`
@@ -27,10 +28,11 @@ const DeckCards = styled.Text`
 
 class DeckInfo extends Component {
     render() {
-        const {title, numberOfCards, navigation} = this.props
+        const {title, navigation} = this.props
+        const numberOfCards = this.props.decks[title].numberOfCards
         return (
             <DeckView>
-                <DeckBtn onPress={() => navigation.navigate('Deck', {title: title, numberOfCards: numberOfCards})}>
+                <DeckBtn onPress={() => navigation.navigate('Deck', {title: title})}>
                     <DeckTitle>
                         {title}
                     </DeckTitle>
@@ -43,4 +45,12 @@ class DeckInfo extends Component {
     }
 }
 
-export default DeckInfo
+function mapStateToProps (decks) {
+    return {
+        decks,
+    }
+}
+
+export default connect (
+    mapStateToProps
+)(DeckInfo)

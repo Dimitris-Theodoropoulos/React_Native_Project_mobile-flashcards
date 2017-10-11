@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
 import {connect} from 'react-redux'
-import {addCardToDeckAction} from '../actions'
+import {addCardToDeckAction, increaseCards} from '../actions/index'
 import {addCardToDeck} from "../utils/api";
 
 const MainView = styled.View`
@@ -51,28 +51,30 @@ class AddCard extends Component {
         alreadyExists: false,
     }
 
-    handleSubmit = (title, question, answer) => {
+    handleSubmit = (title, question, answer, previousNumber) => {
         this.props.dispatch(addCardToDeckAction({title: title, question: question, answer: answer}))
+        this.props.dispatch(increaseCards({ title: title, previousNumber: previousNumber }))
         addCardToDeck(title, question, answer)
         this.setState({
             question: '',
             answer: ''
         })
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Deck', {title: title})
     }
 
-    checkFields = (title, question, answer) => {
+    checkFields = (title, question, answer, previousNumber) => {
         if (question === '' || answer === '') {
             this.setState({emptyField: true})
         } else {
             this.setState({emptyField: false, alreadyExists: false})
-            this.handleSubmit(title, question, answer)
+            this.handleSubmit(title, question, answer, previousNumber)
         }
     }
 
     render() {
         const {question, answer} = this.state
         const title = this.props.navigation.state.params.title
+        const previousNumber = this.props.decks[title].numberOfCards
         return (
             <MainView>
                 <QuestionInput
@@ -100,12 +102,12 @@ class AddCard extends Component {
                             }
                         }
                         if (count === 0) {
-                            this.checkFields(title, question, answer)
+                            this.checkFields(title, question, answer, previousNumber)
                         } else {
                             this.setState({alreadyExists: true})
                         }
                     } else {
-                        this.checkFields(title, question, answer)
+                        this.checkFields(title, question, answer, previousNumber)
                     }
                 }}>
                     <SubmitText>Submit</SubmitText>

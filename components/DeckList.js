@@ -42,7 +42,7 @@ class DeckList extends Component {
         return (
             <MainView>
                 <ScrollView style={{flex: 1}}>
-                    {this.props.decks.map(deck => <DeckInfo key={deck.title} navigation={this.props.navigation} title={deck.title} numberOfCards={deck.numberOfCards}/>)}
+                    {this.props.decks.map(deck => <DeckInfo key={deck.title} navigation={this.props.navigation} title={deck.title} />)}
                 </ScrollView>
             </MainView>
         )
