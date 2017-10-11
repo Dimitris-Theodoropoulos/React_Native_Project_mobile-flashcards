@@ -47,7 +47,7 @@ const StartQuizText = styled.Text`
   font-size: 20;
   color: white;
 `
-
+//TODO add animation??
 class Deck extends Component {
     state = {
         quizDisabled: false,

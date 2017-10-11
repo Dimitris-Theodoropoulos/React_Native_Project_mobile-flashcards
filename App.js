@@ -100,7 +100,7 @@ const MainNavigator = StackNavigator({
 })
 
 const store = createStore(reducer)
-
+//TODO add push notification if a person has not study for today
 export default class App extends React.Component {
     render() {
         return (

@@ -49,7 +49,7 @@ const IncorrectBtn = styled.TouchableOpacity`
   margin-top: 2%;
   background-color: red;
 `
-
+//TODO add quiz functionality
 class Quiz extends Component {
     state = {
         flipCard: 'question'
