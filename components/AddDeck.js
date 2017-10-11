@@ -43,9 +43,15 @@ const DeckTextWrapper = styled.View`
   padding-top: 15%;
 `
 
+const WarnText = styled.Text`
+    color: red;
+`
+
 class AddDeck extends Component {
     state = {
-        title: ''
+        title: '',
+        warning: false,
+        alreadyExists: false,
     }
 
     handleSubmit = (title) => {
@@ -53,6 +59,18 @@ class AddDeck extends Component {
         saveDeckTitle(title)
         this.setState({title: ''})
         this.props.navigation.navigate('DeckList')
+    }
+
+    checkField = (title) => {
+        if (title === '') {
+            this.setState({ warning: true })
+        }else {
+            this.setState({
+                warning: false,
+                alreadyExists: false,
+            })
+            this.handleSubmit(title)
+        }
     }
 
     render() {
@@ -69,7 +87,29 @@ class AddDeck extends Component {
                     value={this.state.title}
                     onChangeText={(text) => this.setState({title: text})}
                 />
-                <Submit onPress={() => this.handleSubmit(title)}>
+                {this.state.warning && (
+                    <WarnText>Please enter a title...</WarnText>
+                )}
+                {this.state.alreadyExists && (
+                    <WarnText>A deck with this title already exists! Please enter a unique title...</WarnText>
+                )}
+                <Submit onPress={() => {
+                    if (this.props.decks.length !== 0) {
+                        let count = 0
+                        for (deck of this.props.decks) {
+                            if (deck.title === title) {
+                                count++
+                            }
+                        }
+                        if (count === 0) {
+                            this.checkField(title)
+                        }else {
+                            this.setState({ alreadyExists: true })
+                        }
+                    }else {
+                        this.checkField(title)
+                    }
+                }}>
                     <SubmitText>
                         Submit
                     </SubmitText>
@@ -81,7 +121,7 @@ class AddDeck extends Component {
 
 function mapStateToProps(decks) {
     return {
-        decks,
+        decks: Object.keys(decks).map(key => decks[key])
     }
 }
 
