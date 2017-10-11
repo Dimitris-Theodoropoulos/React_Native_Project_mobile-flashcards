@@ -8,7 +8,7 @@ function decks(state = {}, action) {
                 ...state,
                 [title]: {
                     title: title,
-                    questions: {},
+                    questions: [],
                     numberOfCards: 0
                 }
             }

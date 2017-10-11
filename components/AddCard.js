@@ -39,10 +39,16 @@ const SubmitText = styled.Text`
   font-size: 25;
 `
 
+const WarnText = styled.Text`
+    color: red;
+`
+
 class AddCard extends Component {
     state = {
         question: '',
         answer: '',
+        emptyField: false,
+        alreadyExists: false,
     }
 
     handleSubmit = (title, question, answer) => {
@@ -55,6 +61,15 @@ class AddCard extends Component {
         this.props.navigation.navigate('Home')
     }
 
+    checkFields = (title, question, answer) => {
+        if (question === '' || answer === '') {
+            this.setState({emptyField: true})
+        } else {
+            this.setState({emptyField: false, alreadyExists: false})
+            this.handleSubmit(title, question, answer)
+        }
+    }
+
     render() {
         const {question, answer} = this.state
         const title = this.props.navigation.state.params.title
@@ -62,15 +77,37 @@ class AddCard extends Component {
             <MainView>
                 <QuestionInput
                     placeholder='Enter the question'
-                    value={this.state.question}
+                    value={question}
                     onChangeText={(text) => this.setState({question: text})}>
                 </QuestionInput>
                 <AnswerInput
                     placeholder='Enter the answer'
-                    value={this.state.answer}
+                    value={answer}
                     onChangeText={(text) => this.setState({answer: text})}>
                 </AnswerInput>
-                <Submit onPress={() => this.handleSubmit(title, question, answer)}>
+                {this.state.emptyField && (
+                    <WarnText>Please fill both fields...</WarnText>
+                )}
+                {this.state.alreadyExists && (
+                    <WarnText>This question already exists, please enter a new one...</WarnText>
+                )}
+                <Submit onPress={() => {
+                    if (this.props.decks[title].questions.length !== 0) {
+                        let count = 0
+                        for (q of this.props.decks[title].questions) {
+                            if (q.question === question) {
+                                count++
+                            }
+                        }
+                        if (count === 0) {
+                            this.checkFields(title, question, answer)
+                        } else {
+                            this.setState({alreadyExists: true})
+                        }
+                    } else {
+                        this.checkFields(title, question, answer)
+                    }
+                }}>
                     <SubmitText>Submit</SubmitText>
                 </Submit>
             </MainView>
