@@ -4,7 +4,7 @@ import styled from 'styled-components/native'
 import DeckInfo from './DeckInfo'
 import {connect} from 'react-redux'
 import {getDeck, getDecks} from '../utils/api'
-import {addCardToDeckAction, saveDeckTitleAction} from "../actions/index";
+import {addCardToDeckAction, saveDeckTitleAction, setNumberOfCards} from "../actions/index";
 
 const MainView = styled.View`
   flex: 1;
@@ -20,6 +20,11 @@ class DeckList extends Component {
             Object.keys(res).map(title => {
                 this.props.dispatch(saveDeckTitleAction({title: title}))
                 getDeck(title).then(result => {
+                    let counter = 0
+                    for (let question of result.questions) {
+                        counter++
+                    }
+                    this.props.dispatch(setNumberOfCards({title: title, numberOfCards: counter}))
                     result.questions.map(card => {
                         this.props.dispatch(addCardToDeckAction({
                             title: title,
@@ -36,7 +41,7 @@ class DeckList extends Component {
         return (
             <MainView>
                 <ScrollView style={{flex: 1}}>
-                    {this.props.decks.map(deck => <DeckInfo key={deck.title} navigation={this.props.navigation} title={deck.title}/>)}
+                    {this.props.decks.map(deck => <DeckInfo key={deck.title} navigation={this.props.navigation} title={deck.title} numberOfCards={deck.numberOfCards}/>)}
                 </ScrollView>
             </MainView>
         )

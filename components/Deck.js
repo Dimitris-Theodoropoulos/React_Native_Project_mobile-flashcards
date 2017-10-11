@@ -49,11 +49,11 @@ const StartQuizText = styled.Text`
 
 class Deck extends Component {
     render() {
-        const title = this.props.navigation.state.params.title
+        const { title, numberOfCards } = this.props.navigation.state.params
         return (
             <MainView>
                 <DeckTitle>{title}</DeckTitle>
-                <NumberOfCards>3 cards</NumberOfCards>
+                <NumberOfCards>{numberOfCards} cards</NumberOfCards>
                 <AddCard onPress={() => this.props.navigation.navigate('AddCard', {title: title})}>
                     <AddCardText>Add Card</AddCardText>
                 </AddCard>

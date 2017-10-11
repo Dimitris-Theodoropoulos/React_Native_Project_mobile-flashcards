@@ -30,7 +30,7 @@ class DeckInfo extends Component {
         const {title, numberOfCards, navigation} = this.props
         return (
             <DeckView>
-                <DeckBtn onPress={() => navigation.navigate('Deck', {title: title})}>
+                <DeckBtn onPress={() => navigation.navigate('Deck', {title: title, numberOfCards: numberOfCards})}>
                     <DeckTitle>
                         {title}
                     </DeckTitle>

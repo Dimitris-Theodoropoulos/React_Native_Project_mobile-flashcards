@@ -1,7 +1,7 @@
-import {ADD_CARD_TO_DECK, SAVE_DECK_TITLE,} from '../actions'
+import {ADD_CARD_TO_DECK, SAVE_DECK_TITLE, SET_NUMBER_OF_CARDS} from '../actions'
 
 function decks(state = {}, action) {
-    const {title, question, answer} = action
+    const {title, question, answer, numberOfCards} = action
     switch (action.type) {
         case SAVE_DECK_TITLE :
             return {
@@ -23,6 +23,14 @@ function decks(state = {}, action) {
                             answer: answer
                         }
                     ]
+                }
+            }
+        case SET_NUMBER_OF_CARDS :
+            return {
+                ...state,
+                [title]: {
+                    ...state[title],
+                    numberOfCards: numberOfCards
                 }
             }
         default :

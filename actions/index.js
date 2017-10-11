@@ -1,5 +1,6 @@
 export const SAVE_DECK_TITLE = 'SAVE_DECK_TITLE'
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
+export const SET_NUMBER_OF_CARDS = 'SET_NUMBER_OF_CARDS'
 
 export function addCardToDeckAction({title, question, answer}) {
     return {
@@ -14,5 +15,13 @@ export function saveDeckTitleAction({title}) {
     return {
         type: SAVE_DECK_TITLE,
         title,
+    }
+}
+
+export function setNumberOfCards ({title, numberOfCards}) {
+    return {
+        type: SET_NUMBER_OF_CARDS,
+        title,
+        numberOfCards,
     }
 }
