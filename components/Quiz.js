@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
-import {setNumberOfCards} from "../actions/index";
 
 const MainView = styled.View`
   flex: 1;
@@ -58,7 +57,7 @@ class Quiz extends Component {
 
     render() {
         const {flipCard} = this.state
-        const { numberOfCards } = this.props.navigation.state.params
+        const {numberOfCards} = this.props.navigation.state.params
         if (flipCard === 'question') {
             return (
                 <MainView>
