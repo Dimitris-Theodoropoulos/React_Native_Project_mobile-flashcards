@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components/native'
-import { connect } from 'react-redux'
-import { saveDeckTitleAction } from '../actions'
+import {connect} from 'react-redux'
+import {saveDeckTitleAction} from '../actions/index'
+import {saveDeckTitle} from "../utils/api";
 
 const MainView = styled.View`
   flex: 1;
@@ -43,46 +44,47 @@ const DeckTextWrapper = styled.View`
 `
 
 class AddDeck extends Component {
-  state = {
-    title: ''
-  }
+    state = {
+        title: ''
+    }
 
-  handleSubmit = (title) => {
-    this.props.dispatch(saveDeckTitleAction({ title: title }))
-    this.setState({ title: '' })
-    this.props.navigation.navigate('DeckList')
-  }
+    handleSubmit = (title) => {
+        this.props.dispatch(saveDeckTitleAction({title: title}))
+        saveDeckTitle(title)
+        this.setState({title: ''})
+        this.props.navigation.navigate('DeckList')
+    }
 
-  render () {
-    const { title } = this.state
-    return (
-      <MainView>
-        <DeckTextWrapper>
-          <DeckText>
-            What is the title of your new deck?
-          </DeckText>
-        </DeckTextWrapper>
-        <DeckTitleInput
-          placeholder='Enter deck title'
-          value={this.state.title}
-          onChangeText={(text) => this.setState({ title: text })}
-        />
-        <Submit onPress={() => this.handleSubmit(title)}>
-          <SubmitText>
-            Submit
-          </SubmitText>
-        </Submit>
-      </MainView>
-    )
-  }
+    render() {
+        const {title} = this.state
+        return (
+            <MainView>
+                <DeckTextWrapper>
+                    <DeckText>
+                        What is the title of your new deck?
+                    </DeckText>
+                </DeckTextWrapper>
+                <DeckTitleInput
+                    placeholder='Enter deck title'
+                    value={this.state.title}
+                    onChangeText={(text) => this.setState({title: text})}
+                />
+                <Submit onPress={() => this.handleSubmit(title)}>
+                    <SubmitText>
+                        Submit
+                    </SubmitText>
+                </Submit>
+            </MainView>
+        )
+    }
 }
 
-function mapStateToProps (decks) {
-  return {
-    decks,
-  }
+function mapStateToProps(decks) {
+    return {
+        decks,
+    }
 }
 
-export default connect (
-  mapStateToProps
+export default connect(
+    mapStateToProps
 )(AddDeck)

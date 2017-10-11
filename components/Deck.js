@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components/native'
 
 const MainView = styled.View`
@@ -48,21 +48,21 @@ const StartQuizText = styled.Text`
 `
 
 class Deck extends Component {
-  render () {
-    const title = this.props.navigation.state.params.title
-    return (
-      <MainView>
-        <DeckTitle>{title}</DeckTitle>
-        <NumberOfCards>3 cards</NumberOfCards>
-        <AddCard onPress={() => this.props.navigation.navigate('AddCard', { title: title })}>
-          <AddCardText>Add Card</AddCardText>
-        </AddCard>
-        <StartQuiz onPress={() => this.props.navigation.navigate('Quiz')}>
-          <StartQuizText>Start Quiz</StartQuizText>
-        </StartQuiz>
-      </MainView>
-    )
-  }
+    render() {
+        const title = this.props.navigation.state.params.title
+        return (
+            <MainView>
+                <DeckTitle>{title}</DeckTitle>
+                <NumberOfCards>3 cards</NumberOfCards>
+                <AddCard onPress={() => this.props.navigation.navigate('AddCard', {title: title})}>
+                    <AddCardText>Add Card</AddCardText>
+                </AddCard>
+                <StartQuiz onPress={() => this.props.navigation.navigate('Quiz')}>
+                    <StartQuizText>Start Quiz</StartQuizText>
+                </StartQuiz>
+            </MainView>
+        )
+    }
 }
 
 export default Deck

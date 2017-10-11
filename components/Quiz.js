@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components/native'
 
 const MainView = styled.View`
@@ -51,47 +51,47 @@ const IncorrectBtn = styled.TouchableOpacity`
 `
 
 class Quiz extends Component {
-  state = {
-    flipCard: 'question'
-  }
+    state = {
+        flipCard: 'question'
+    }
 
-  render () {
-    const { flipCard } = this.state
-    if (flipCard === 'question') {
-      return (
-        <MainView>
-          <CardTracker>2/2</CardTracker>
-          <MainText>What is the name of your favorite movie?</MainText>
-          <ToggleBtn onPress={() => this.setState({ flipCard: 'answer' })}>
-            <ToggleText>Answer</ToggleText>
-          </ToggleBtn>
-          <CorrectBtn>
-            <BtnText>Correct!</BtnText>
-          </CorrectBtn>
-          <IncorrectBtn>
-            <BtnText>Next time...</BtnText>
-          </IncorrectBtn>
-        </MainView>
-      )
+    render() {
+        const {flipCard} = this.state
+        if (flipCard === 'question') {
+            return (
+                <MainView>
+                    <CardTracker>2/2</CardTracker>
+                    <MainText>What is the name of your favorite movie?</MainText>
+                    <ToggleBtn onPress={() => this.setState({flipCard: 'answer'})}>
+                        <ToggleText>Answer</ToggleText>
+                    </ToggleBtn>
+                    <CorrectBtn>
+                        <BtnText>Correct!</BtnText>
+                    </CorrectBtn>
+                    <IncorrectBtn>
+                        <BtnText>Next time...</BtnText>
+                    </IncorrectBtn>
+                </MainView>
+            )
+        }
+        if (flipCard === 'answer') {
+            return (
+                <MainView>
+                    <CardTracker>2/2</CardTracker>
+                    <MainText>V For Vendetta</MainText>
+                    <ToggleBtn onPress={() => this.setState({flipCard: 'question'})}>
+                        <ToggleText>Question</ToggleText>
+                    </ToggleBtn>
+                    <CorrectBtn>
+                        <BtnText>Correct!</BtnText>
+                    </CorrectBtn>
+                    <IncorrectBtn>
+                        <BtnText>Next time...</BtnText>
+                    </IncorrectBtn>
+                </MainView>
+            )
+        }
     }
-    if (flipCard === 'answer') {
-      return (
-        <MainView>
-          <CardTracker>2/2</CardTracker>
-          <MainText>V For Vendetta</MainText>
-          <ToggleBtn onPress={() => this.setState({ flipCard: 'question' })}>
-            <ToggleText>Question</ToggleText>
-          </ToggleBtn>
-          <CorrectBtn>
-            <BtnText>Correct!</BtnText>
-          </CorrectBtn>
-          <IncorrectBtn>
-            <BtnText>Next time...</BtnText>
-          </IncorrectBtn>
-        </MainView>
-      )
-    }
-  }
 }
 
 export default Quiz

@@ -1,30 +1,10 @@
-import React, { Component } from 'react'
-import { FlatList } from 'react-native'
+import React, {Component} from 'react'
+import {ScrollView} from 'react-native'
 import styled from 'styled-components/native'
 import DeckInfo from './DeckInfo'
-
-const mockDecks = [
-  {
-    title: 'react',
-    numberOfCards: 3
-  },
-  {
-    title: 'redux',
-    numberOfCards: 4
-  },
-  {
-    title: 'udacity',
-    numberOfCards: 5
-  },
-  {
-    title: 'okeptok',
-    numberOfCards: 5
-  },
-  {
-    title: 'udavvdvsvcity',
-    numberOfCards: 5
-  }
-]
+import {connect} from 'react-redux'
+import {getDeck, getDecks} from '../utils/api'
+import {addCardToDeckAction, saveDeckTitleAction} from "../actions/index";
 
 const MainView = styled.View`
   flex: 1;
@@ -35,27 +15,40 @@ const MainView = styled.View`
 
 class DeckList extends Component {
 
-  renderItem = ({ item }) => {
-    return (
-      <DeckInfo
-        title={item.title}
-        numberOfCards={item.numberOfCards}
-        navigation={this.props.navigation}
-      />
-    )
-  }
+    componentDidMount() {
+        getDecks().then(res => {
+            Object.keys(res).map(title => {
+                this.props.dispatch(saveDeckTitleAction({title: title}))
+                getDeck(title).then(result => {
+                    result.questions.map(card => {
+                        this.props.dispatch(addCardToDeckAction({
+                            title: title,
+                            question: card.question,
+                            answer: card.answer
+                        }))
+                    })
+                })
+            })
+        })
+    }
 
-  render () {
-    return (
-      <MainView>
-        <FlatList
-          data={mockDecks}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) => index}
-        />
-      </MainView>
-    )
-  }
+    render() {
+        return (
+            <MainView>
+                <ScrollView style={{flex: 1}}>
+                    {this.props.decks.map(deck => <DeckInfo key={deck.title} navigation={this.props.navigation} title={deck.title}/>)}
+                </ScrollView>
+            </MainView>
+        )
+    }
 }
 
-export default DeckList
+function mapStateToProps(decks) {
+    return {
+        decks: Object.keys(decks).map(key => decks[key])
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(DeckList)

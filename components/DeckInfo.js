@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import styled from 'styled-components/native'
 
 
@@ -26,21 +26,21 @@ const DeckCards = styled.Text`
 `
 
 class DeckInfo extends Component {
-  render () {
-    const { title, numberOfCards, navigation } = this.props
-    return (
-      <DeckView>
-        <DeckBtn onPress={() => navigation.navigate('Deck', { title: title })}>
-          <DeckTitle>
-            {title}
-          </DeckTitle>
-          <DeckCards>
-            {numberOfCards} cards
-          </DeckCards>
-        </DeckBtn>
-      </DeckView>
-    )
-  }
+    render() {
+        const {title, numberOfCards, navigation} = this.props
+        return (
+            <DeckView>
+                <DeckBtn onPress={() => navigation.navigate('Deck', {title: title})}>
+                    <DeckTitle>
+                        {title}
+                    </DeckTitle>
+                    <DeckCards>
+                        {numberOfCards} cards
+                    </DeckCards>
+                </DeckBtn>
+            </DeckView>
+        )
+    }
 }
 
 export default DeckInfo
