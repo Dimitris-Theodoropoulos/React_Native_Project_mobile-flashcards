@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
+import {connect} from 'react-redux'
+import {Text} from 'react-native'
 
 const MainView = styled.View`
   flex: 1;
@@ -49,50 +51,86 @@ const IncorrectBtn = styled.TouchableOpacity`
   margin-top: 2%;
   background-color: red;
 `
+
 //TODO add quiz functionality
 class Quiz extends Component {
     state = {
-        flipCard: 'question'
+        cardCounter: 0,
+        flipCard: 'question',
+        correctCounter: 0,
+    }
+
+    handleCorrect = () => {
+        let newCardCounter = this.state.cardCounter + 1
+        let newCounter = this.state.correctCounter + 1
+        this.setState({correctCounter: newCounter})
+        this.setState({cardCounter: newCardCounter})
+        this.setState({ flipCard: 'question' })
+    }
+
+    handleWrong = () => {
+        let newCardCounter = this.state.cardCounter + 1
+        this.setState({cardCounter: newCardCounter})
+        this.setState({ flipCard: 'question' })
     }
 
     render() {
+        console.log(this.props.decks)
         const {flipCard} = this.state
-        const {numberOfCards} = this.props.navigation.state.params
-        if (flipCard === 'question') {
+        const {numberOfCards, title} = this.props.navigation.state.params
+        if (this.state.cardCounter < this.props.decks[title].questions.length) {
+            const {question, answer} = this.props.decks[title].questions[this.state.cardCounter]
+            if (flipCard === 'question') {
+                return (
+                    <MainView>
+                        <CardTracker>{this.state.cardCounter + 1}/{numberOfCards}</CardTracker>
+                        <MainText>{question}</MainText>
+                        <ToggleBtn onPress={() => this.setState({flipCard: 'answer'})}>
+                            <ToggleText>Answer</ToggleText>
+                        </ToggleBtn>
+                        <CorrectBtn onPress={() => this.handleCorrect()}>
+                            <BtnText>Correct!</BtnText>
+                        </CorrectBtn>
+                        <IncorrectBtn onPress={() => this.handleWrong()}>
+                            <BtnText>Next time...</BtnText>
+                        </IncorrectBtn>
+                    </MainView>
+                )
+            }
+            if (flipCard === 'answer') {
+                return (
+                    <MainView>
+                        <CardTracker>{this.state.cardCounter + 1}/{numberOfCards}</CardTracker>
+                        <MainText>{answer}</MainText>
+                        <ToggleBtn onPress={() => this.setState({flipCard: 'question'})}>
+                            <ToggleText>Question</ToggleText>
+                        </ToggleBtn>
+                        <CorrectBtn onPress={() => this.handleCorrect()}>
+                            <BtnText>Correct!</BtnText>
+                        </CorrectBtn>
+                        <IncorrectBtn onPress={() => this.handleWrong()}>
+                            <BtnText>Next time...</BtnText>
+                        </IncorrectBtn>
+                    </MainView>
+                )
+            }
+        } else {
             return (
                 <MainView>
-                    <CardTracker>0/{numberOfCards}</CardTracker>
-                    <MainText>What is the name of your favorite movie?</MainText>
-                    <ToggleBtn onPress={() => this.setState({flipCard: 'answer'})}>
-                        <ToggleText>Answer</ToggleText>
-                    </ToggleBtn>
-                    <CorrectBtn>
-                        <BtnText>Correct!</BtnText>
-                    </CorrectBtn>
-                    <IncorrectBtn>
-                        <BtnText>Next time...</BtnText>
-                    </IncorrectBtn>
-                </MainView>
-            )
-        }
-        if (flipCard === 'answer') {
-            return (
-                <MainView>
-                    <CardTracker>2/2</CardTracker>
-                    <MainText>V For Vendetta</MainText>
-                    <ToggleBtn onPress={() => this.setState({flipCard: 'question'})}>
-                        <ToggleText>Question</ToggleText>
-                    </ToggleBtn>
-                    <CorrectBtn>
-                        <BtnText>Correct!</BtnText>
-                    </CorrectBtn>
-                    <IncorrectBtn>
-                        <BtnText>Next time...</BtnText>
-                    </IncorrectBtn>
+                    <Text>Finished</Text>
+                    <Text>{this.state.correctCounter}/{this.state.cardCounter}</Text>
                 </MainView>
             )
         }
     }
 }
 
-export default Quiz
+function mapStateToProps(decks) {
+    return {
+        decks
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(Quiz)
