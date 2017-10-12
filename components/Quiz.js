@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
 import {connect} from 'react-redux'
-import {Text} from 'react-native'
 
 const MainView = styled.View`
   flex: 1;
@@ -52,7 +51,59 @@ const IncorrectBtn = styled.TouchableOpacity`
   background-color: red;
 `
 
-//TODO add quiz functionality
+const FinishedQuiz = styled.Text`
+    margin-top: 5%;
+    font-size: 50;
+`
+
+const Rate = styled.Text`
+    margin-top: 10%;
+    color: gray;
+    font-size: 35
+`
+
+const Success = styled.Text`
+    color: green;
+    font-size: 30;
+    margin-top: 10%
+`
+
+const Failure = styled.Text`
+    color: red;
+    font-size: 30;
+    margin-top: 10%
+`
+
+const BackToHome = styled.TouchableOpacity`
+  width: 65%;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+  margin-top: 45%;
+  background-color: white;
+  border: solid black;
+`
+
+const RestartQuiz = styled.TouchableOpacity`
+  width: 65%;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+  margin-top: 5%;
+  background-color: black;
+`
+
+const RestartText = styled.Text`
+    color: white;
+    font-size: 30;
+`
+
+const BackToDeck = styled.Text`
+    color: black;
+    font-size: 30;
+    
+`
+
 class Quiz extends Component {
     state = {
         cardCounter: 0,
@@ -65,17 +116,16 @@ class Quiz extends Component {
         let newCounter = this.state.correctCounter + 1
         this.setState({correctCounter: newCounter})
         this.setState({cardCounter: newCardCounter})
-        this.setState({ flipCard: 'question' })
+        this.setState({flipCard: 'question'})
     }
 
     handleWrong = () => {
         let newCardCounter = this.state.cardCounter + 1
         this.setState({cardCounter: newCardCounter})
-        this.setState({ flipCard: 'question' })
+        this.setState({flipCard: 'question'})
     }
 
     render() {
-        console.log(this.props.decks)
         const {flipCard} = this.state
         const {numberOfCards, title} = this.props.navigation.state.params
         if (this.state.cardCounter < this.props.decks[title].questions.length) {
@@ -117,8 +167,25 @@ class Quiz extends Component {
         } else {
             return (
                 <MainView>
-                    <Text>Finished</Text>
-                    <Text>{this.state.correctCounter}/{this.state.cardCounter}</Text>
+                    <FinishedQuiz>QUIZ FINISHED</FinishedQuiz>
+                    <Rate>Your rate is:</Rate>
+                    {this.state.correctCounter / this.state.cardCounter >= 0.5
+                        ? <Success>{(this.state.correctCounter / this.state.cardCounter).toFixed(2) * 100}%</Success>
+                        : <Failure>{(this.state.correctCounter / this.state.cardCounter).toFixed(2) * 100}%</Failure>
+                    }
+                    <BackToHome onPress={() => this.props.navigation.navigate('Deck', {title: title})}>
+                        <BackToDeck>Back
+                            to {title} deck
+                        </BackToDeck>
+                    </BackToHome>
+                    <RestartQuiz onPress={() => this.props.navigation.navigate('Quiz', {
+                        title: title,
+                        numberOfCards: numberOfCards
+                    })}>
+                        <RestartText>
+                            Restart Quiz!
+                        </RestartText>
+                    </RestartQuiz>
                 </MainView>
             )
         }
