@@ -12,6 +12,7 @@ import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './reducers'
 import thunk from 'redux-thunk'
+import {setLocalNotification} from './utils/helpers'
 
 const Tabs = TabNavigator({
     DeckList: {
@@ -105,8 +106,12 @@ const store = createStore(
     applyMiddleware(thunk)
 )
 
-//TODO add push notification if a person has not study for today
 export default class App extends React.Component {
+
+    componentDidMount() {
+        setLocalNotification()
+    }
+
     render() {
         return (
             <Provider store={store}>

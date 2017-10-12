@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
 import {connect} from 'react-redux'
+import {clearLocalNotification, setLocalNotification} from '../utils/helpers'
 
 const MainView = styled.View`
   flex: 1;
@@ -125,6 +126,10 @@ class Quiz extends Component {
         this.setState({flipCard: 'question'})
     }
 
+    cancelNotification = () => {
+        clearLocalNotification().then(setLocalNotification)
+    }
+
     render() {
         const {flipCard} = this.state
         const {numberOfCards, title} = this.props.navigation.state.params
@@ -173,15 +178,20 @@ class Quiz extends Component {
                         ? <Success>{(this.state.correctCounter / this.state.cardCounter).toFixed(2) * 100}%</Success>
                         : <Failure>{(this.state.correctCounter / this.state.cardCounter).toFixed(2) * 100}%</Failure>
                     }
-                    <BackToHome onPress={() => this.props.navigation.navigate('Deck', {title: title})}>
+                    <BackToHome onPress={() => {
+                        this.props.navigation.navigate('Deck', {title: title})
+                        this.cancelNotification()
+                    }}>
                         <BackToDeck>Back
                             to {title} deck
                         </BackToDeck>
                     </BackToHome>
-                    <RestartQuiz onPress={() => this.props.navigation.navigate('Quiz', {
-                        title: title,
-                        numberOfCards: numberOfCards
-                    })}>
+                    <RestartQuiz onPress={() => {
+                        this.props.navigation.navigate('Quiz', {
+                            title: title,
+                            numberOfCards: numberOfCards})
+                        this.cancelNotification()
+                    }}>
                         <RestartText>
                             Restart Quiz!
                         </RestartText>
