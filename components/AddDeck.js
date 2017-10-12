@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
 import {connect} from 'react-redux'
-import {saveDeckTitleAction} from '../actions/index'
-import {saveDeckTitle} from "../utils/api";
+import {saveDeckTitleAsync} from '../actions/index'
 
 const MainView = styled.View`
   flex: 1;
@@ -55,8 +54,7 @@ class AddDeck extends Component {
     }
 
     handleSubmit = (title) => {
-        this.props.dispatch(saveDeckTitleAction({title: title}))
-        saveDeckTitle(title)
+        this.props.dispatch(saveDeckTitleAsync(title))
         this.setState({title: ''})
         this.props.navigation.navigate('DeckList')
         this.props.navigation.navigate('Deck', {title: title, numberOfCards: 0})
@@ -64,8 +62,8 @@ class AddDeck extends Component {
 
     checkField = (title) => {
         if (title === '') {
-            this.setState({ warning: true })
-        }else {
+            this.setState({warning: true})
+        } else {
             this.setState({
                 warning: false,
                 alreadyExists: false,
@@ -104,10 +102,10 @@ class AddDeck extends Component {
                         }
                         if (count === 0) {
                             this.checkField(title)
-                        }else {
-                            this.setState({ alreadyExists: true })
+                        } else {
+                            this.setState({alreadyExists: true})
                         }
-                    }else {
+                    } else {
                         this.checkField(title)
                     }
                 }}>

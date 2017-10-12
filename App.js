@@ -8,9 +8,10 @@ import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'
 import {Entypo, Ionicons} from '@expo/vector-icons'
 import AddCard from './components/AddCard'
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducer from './reducers'
+import thunk from 'redux-thunk'
 
 const Tabs = TabNavigator({
     DeckList: {
@@ -99,7 +100,11 @@ const MainNavigator = StackNavigator({
     },
 })
 
-const store = createStore(reducer)
+const store = createStore(
+    reducer,
+    applyMiddleware(thunk)
+)
+
 //TODO add push notification if a person has not study for today
 export default class App extends React.Component {
     render() {

@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import styled from 'styled-components/native'
 import {connect} from 'react-redux'
-import {addCardToDeckAction, increaseCards} from '../actions/index'
-import {addCardToDeck} from "../utils/api";
+import {addCardToDeckAsync} from '../actions/index'
 
 const MainView = styled.View`
   flex: 1;
@@ -52,9 +51,7 @@ class AddCard extends Component {
     }
 
     handleSubmit = (title, question, answer, previousNumber) => {
-        this.props.dispatch(addCardToDeckAction({title: title, question: question, answer: answer}))
-        this.props.dispatch(increaseCards({ title: title, previousNumber: previousNumber }))
-        addCardToDeck(title, question, answer)
+        this.props.dispatch(addCardToDeckAsync(title, question, answer, previousNumber))
         this.setState({
             question: '',
             answer: ''

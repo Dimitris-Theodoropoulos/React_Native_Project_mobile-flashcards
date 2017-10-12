@@ -3,8 +3,8 @@ import {ScrollView} from 'react-native'
 import styled from 'styled-components/native'
 import DeckInfo from './DeckInfo'
 import {connect} from 'react-redux'
-import {getDeck, getDecks, clearAsyncStorage} from '../utils/api'
-import {addCardToDeckAction, saveDeckTitleAction, setNumberOfCards} from "../actions/index";
+import {getDecksAsync} from "../actions/index";
+import {clearAsyncStorage} from "../utils/api";
 
 const MainView = styled.View`
   flex: 1;
@@ -17,25 +17,7 @@ class DeckList extends Component {
 
     componentDidMount() {
         //clearAsyncStorage()
-        getDecks().then(res => {
-            Object.keys(res).map(title => {
-                this.props.dispatch(saveDeckTitleAction({title: title}))
-                getDeck(title).then(result => {
-                    let counter = 0
-                    for (let question of result.questions) {
-                        counter++
-                    }
-                    this.props.dispatch(setNumberOfCards({title: title, numberOfCards: counter}))
-                    result.questions.map(card => {
-                        this.props.dispatch(addCardToDeckAction({
-                            title: title,
-                            question: card.question,
-                            answer: card.answer
-                        }))
-                    })
-                })
-            })
-        })
+        this.props.dispatch(getDecksAsync())
     }
 
     render() {
